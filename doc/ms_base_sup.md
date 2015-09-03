@@ -1,6 +1,6 @@
 
 
-# Module ms_logger_sup #
+# Module ms_base_sup #
 * [Function Index](#index)
 * [Function Details](#functions)
 

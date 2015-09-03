@@ -1,6 +1,6 @@
 
 
-# Module ms_logger_app #
+# Module ms_base_app #
 * [Function Index](#index)
 * [Function Details](#functions)
 
@@ -41,7 +41,7 @@ start(StartType::<a href="application.md#type-start_type">application:start_type
 ### stop/0 ###
 
 <pre><code>
-stop() -&gt; ok | {error, {not_started, ms_logger}}
+stop() -&gt; ok | {error, {not_started, ms_base}}
 </code></pre>
 <br />
 
