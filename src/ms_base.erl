@@ -1,0 +1,2 @@
+-module(ms_base).
+-include("ms_base.hrl").

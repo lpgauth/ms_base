@@ -1,0 +1,15 @@
+{application, ms_base, [
+    {description, "ms base"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib,
+        lager,
+        cowboy,
+        reconnaissance,
+        resource_discovery
+    ]},
+    {mod, {ms_base_app, []}},
+    {env, []}
+]}.
