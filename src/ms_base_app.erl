@@ -28,6 +28,8 @@ stop() ->
 -spec start(application:start_type(), term()) -> {ok, pid()}.
 
 start(_StartType, _StartArgs) ->
+    reconnaissance:discover(),
+
     {ok, Local} = application:get_env(?APP, local_resource_types),
     {ok, Target} = application:get_env(?APP, target_resource_types),
 
