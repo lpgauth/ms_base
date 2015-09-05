@@ -28,6 +28,8 @@ stop() ->
 -spec start(application:start_type(), term()) -> {ok, pid()}.
 
 start(_StartType, _StartArgs) ->
+    ok = ms_base_global:start(),
+
     Local = ?ENV(local_resource_types, ?DEFAULT_LOCAL_TYPES),
     Target = ?ENV(target_resource_types, ?DEFAULT_TARGET_TYPES),
 
@@ -46,5 +48,6 @@ stop(_State) ->
     [resource_discovery:delete_local_resource_tuple({Type, node()}) ||
         Type <- Local],
     resource_discovery:trade_resources(),
+    ms_base_global:stop(),
 
     ok.
