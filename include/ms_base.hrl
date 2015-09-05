@@ -2,9 +2,9 @@
 -define(CHILD(Name), {Name, {Name, start_link, []}, permanent, 5000, worker, [Name]}).
 -define(CONTENT_TYPE_JSON, {<<"content-type">>, <<"application/json">>}).
 -define(DEFAULT_HEARTBEAT_DELAY, 60000). % timer:minutes(1)
--define(DEFAULT_HTTP_IP, {127, 0, 0, 1}).
--define(DEFAULT_HTTP_PORT, 9090).
 -define(DEFAULT_LOCAL_TYPES, [test]).
+-define(DEFAULT_STATUS_IP, {127, 0, 0, 1}).
+-define(DEFAULT_STATUS_PORT, 9090).
 -define(DEFAULT_TARGET_TYPES, [test]).
 -define(ENV(Key, Default), application:get_env(?APP, Key, Default)).
 -define(ETS_GLOBAL, ms_base_global).

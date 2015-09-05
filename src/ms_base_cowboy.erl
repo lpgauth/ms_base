@@ -10,23 +10,23 @@
 -spec start() -> ok.
 
 start() ->
-    HttpIp = ?ENV(http_ip, ?DEFAULT_HTTP_IP),
-    HttpPort = ?ENV(http_port, ?DEFAULT_HTTP_PORT),
+    StatusIp = ?ENV(status_ip, ?DEFAULT_STATUS_IP),
+    StatusPort = ?ENV(status_port, ?DEFAULT_STATUS_PORT),
 
     Dispatch = cowboy_router:compile([{'_', [
         {"/status", ms_base_status, []}
     ]}]),
 
     try cowboy:start_http(?APP, 2, [
-        {ip, HttpIp},
-        {port, HttpPort}
+        {ip, StatusIp},
+        {port, StatusPort}
     ], [
         {env, [{dispatch, Dispatch}]}
     ]) of
         {ok, _Pid} ->
             ok;
         {error, Reason} ->
-            lager:warning("ms_http_app start_http error: ~p~n", [Reason]),
+            lager:warning("ms_base_cowboy start_http error: ~p~n", [Reason]),
             ok
     catch
         _:_ -> ok
