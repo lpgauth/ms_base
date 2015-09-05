@@ -1,1 +1,4 @@
 -define(APP, ms_base).
+-define(DEFAULT_LOCAL_TYPES, [test]).
+-define(DEFAULT_TARGET_TYPES, [test]).
+-define(ENV(Key, Default), application:get_env(?APP, Key, Default)).
