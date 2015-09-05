@@ -29,6 +29,7 @@ stop() ->
 
 start(_StartType, _StartArgs) ->
     ok = ms_base_global:start(),
+    ok = ms_base_cowboy:start(),
 
     Local = ?ENV(local_resource_types, ?DEFAULT_LOCAL_TYPES),
     Target = ?ENV(target_resource_types, ?DEFAULT_TARGET_TYPES),
@@ -43,11 +44,12 @@ start(_StartType, _StartArgs) ->
 -spec stop(term()) -> ok.
 
 stop(_State) ->
-    {ok, Local} = application:get_env(?APP, local_resource_types),
+    Local = ?ENV(local_resource_types, ?DEFAULT_LOCAL_TYPES),
 
     [resource_discovery:delete_local_resource_tuple({Type, node()}) ||
         Type <- Local],
     resource_discovery:trade_resources(),
-    ms_base_global:stop(),
 
+    ms_base_cowboy:stop(),
+    ms_base_global:stop(),
     ok.

@@ -1,4 +1,7 @@
 -define(APP, ms_base).
+-define(CONTENT_TYPE_JSON, {<<"content-type">>, <<"application/json">>}).
+-define(DEFAULT_HTTP_IP, {127, 0, 0, 1}).
+-define(DEFAULT_HTTP_PORT, 9090).
 -define(DEFAULT_LOCAL_TYPES, [test]).
 -define(DEFAULT_TARGET_TYPES, [test]).
 -define(ENV(Key, Default), application:get_env(?APP, Key, Default)).

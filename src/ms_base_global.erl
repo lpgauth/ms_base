@@ -22,11 +22,10 @@ lookup(Name) ->
 -spec register(atom(), term()) -> ok | registered_name.
 
 register(Name, Object) ->
-    try
-        ets:insert_new(?ETS_GLOBAL, {Name, Object}),
-        ok
-    catch
-        error:badarg ->
+    case ets:insert_new(?ETS_GLOBAL, {Name, Object}) of
+        true ->
+            ok;
+        false ->
             registered_name
     end.
 
