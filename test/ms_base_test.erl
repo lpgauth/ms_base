@@ -128,5 +128,5 @@ setup() ->
     ms_base_app:start().
 
 url(Path) ->
-    Port = ?ENV(http_port, ?DEFAULT_HTTP_PORT),
+    Port = ?ENV(http_port, ?DEFAULT_STATUS_PORT),
     "http://127.0.0.1:" ++ integer_to_list(Port) ++ Path.
