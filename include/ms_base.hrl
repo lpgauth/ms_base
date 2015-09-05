@@ -1,5 +1,7 @@
 -define(APP, ms_base).
+-define(CHILD(Name), {Name, {Name, start_link, []}, permanent, 5000, worker, [Name]}).
 -define(CONTENT_TYPE_JSON, {<<"content-type">>, <<"application/json">>}).
+-define(DEFAULT_HEARTBEAT_DELAY, 60000). % timer:minutes(1)
 -define(DEFAULT_HTTP_IP, {127, 0, 0, 1}).
 -define(DEFAULT_HTTP_PORT, 9090).
 -define(DEFAULT_LOCAL_TYPES, [test]).

@@ -37,7 +37,6 @@ start(_StartType, _StartArgs) ->
     [resource_discovery:add_local_resource_tuple({Type, node()}) ||
         Type <- Local],
     resource_discovery:add_target_resource_types(Target),
-    reconnaissance:discover(),
 
     ms_base_sup:start_link().
 

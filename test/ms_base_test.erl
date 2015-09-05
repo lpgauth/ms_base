@@ -12,6 +12,7 @@ ms_base_test_() ->
         fun () -> setup() end,
         fun (_) -> cleanup() end,
     [
+        fun apply/0,
         fun status/0
     ]}.
 
@@ -25,6 +26,13 @@ ms_base2_test_() ->
     ].
 
 %% tests
+apply() ->
+    ?assertEqual(ok,
+        ms_base:apply(test, ms_base_global, register, [test, <<>>])),
+
+    ?assertEqual([registered_name],
+        ms_base:apply_all(test, ms_base_global, register, [test, <<>>])).
+
 global() ->
     ok = ms_base_global:start(),
     Name = my_key,

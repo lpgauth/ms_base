@@ -22,5 +22,4 @@ response(_Ip, _Port, _Request) ->
 
 handle_response(Ip, Port, Response) ->
     net_adm:ping(binary_to_term(Response)),
-    resource_discovery:trade_resources(),
     {Ip, Port, Response}.
