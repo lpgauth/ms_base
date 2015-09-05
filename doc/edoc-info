@@ -1,4 +1,6 @@
 %% encoding: UTF-8
 {application,ms_base}.
 {packages,[]}.
-{modules,[ms_base,ms_base_app,ms_base_sup]}.
+{modules,[ms_base,ms_base_app,ms_base_cowboy,ms_base_global,
+          ms_base_parse_transform,ms_base_reconnaissance,ms_base_status,
+          ms_base_sup]}.

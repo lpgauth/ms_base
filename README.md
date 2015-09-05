@@ -1,5 +1,7 @@
 # ms_base
 
+[![Build Status](https://travis-ci.org/lpgauth/ms_base.svg)](https://travis-ci.org/lpgauth/ms_base)
+
 Erlang microservice example (base)
 
 ### Requirements
