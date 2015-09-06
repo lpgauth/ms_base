@@ -17,9 +17,16 @@ apply(Type, Module, Function, Args) ->
         false ->
             case resource_discovery:get_resource(Type) of
                 {ok, Node} ->
-                    rpc:call(Node, Module, Function, Args);
-                {error, not_found} ->
-                    {badrpc, no_node}
+                    case rpc:call(Node, Module, Function, Args) of
+                        {badrpc, Reason} = Error ->
+                            lager:warning("ms_base ~p badrpc: ~p~n", [Type, Reason]),
+                            Error;
+                        Response ->
+                            Response
+                    end;
+                {error, not_found} = Error ->
+                    lager:warning("ms_base ~p badrpc: not_found~n", [Type]),
+                    Error
             end
     end.
 
@@ -28,10 +35,14 @@ apply(Type, Module, Function, Args) ->
 
 apply_all(Type, Module, Function, Args) ->
     Local = node(),
-    io:format("~p~n", [resource_discovery:get_resources(Type)]),
-    lists:map(fun (Node) ->
-        case Node of
-            Local -> erlang:apply(Module, Function, Args);
-            _ -> rpc:call(Node, Module, Function, Args)
-        end
+    lists:map(fun (Node) when Node =:= Local ->
+            erlang:apply(Module, Function, Args);
+                  (Node) ->
+            case rpc:call(Node, Module, Function, Args) of
+                {badrpc, Reason} = Error ->
+                    lager:warning("ms_base ~p badrpc: ~p~n", [Type, Reason]),
+                    Error;
+                Response ->
+                    Response
+            end
     end, resource_discovery:get_resources(Type)).
