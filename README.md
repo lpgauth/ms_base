@@ -8,6 +8,13 @@ Erlang microservice example (base)
 
 * Erlang 17.0 +
 
+## API
+
+### status
+```
+curl -i -X GET 'http://127.0.0.1:8080/status'
+```
+
 ## Tests
 
 ```makefile

@@ -78,10 +78,13 @@ status() ->
         <<"status">>,
         <<"git_sha">>,
         <<"build_date">>,
-        <<"now_unix">>
+        <<"now_unix">>,
+        <<"services">>
     ], Keys),
 
-    assert_prop_value(<<"OK">>, <<"status">>, KeyValues).
+    assert_prop_value(<<"OK">>, <<"status">>, KeyValues),
+    assert_prop_value([<<"test">>], <<"services">>, KeyValues).
+
 
 %% utils
 assert_prop_value(Expected, Header, Headers) ->

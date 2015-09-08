@@ -36,9 +36,13 @@ unix_time() ->
     (Mega * 1000000 * 1000000 + Sec * 1000000) + Micro.
 
 status() ->
+    Local = ?ENV(local_resource_types, ?DEFAULT_LOCAL_TYPES),
+    Services = [atom_to_binary(Type, latin1) || Type <- Local],
+
     jiffy:encode({[
         {<<"status">>, <<"OK">>},
         {<<"git_sha">>, GIT_SHA},
         {<<"build_date">>, BUILD_DATE},
-        {<<"now_unix">>, unix_time()}
+        {<<"now_unix">>, unix_time()},
+        {<<"services">>, Services}
     ]}, [pretty]).
