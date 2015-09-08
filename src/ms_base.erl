@@ -3,11 +3,13 @@
 
 -export([
     apply/4,
-    apply_all/4
+    apply_all/4,
+    apply_all_not_local/4
 ]).
 
 %% public
--spec apply(atom(), module(), atom(), [term()]) -> term() | {badrpc, term()}.
+-spec apply(atom(), module(), atom(), [term()]) ->
+    term() | {error, not_found} | {badrpc, term()}.
 
 apply(Type, Module, Function, Args) ->
     Local = ?ENV(local_resource_types, ?DEFAULT_LOCAL_TYPES),
@@ -30,19 +32,30 @@ apply(Type, Module, Function, Args) ->
             end
     end.
 
--spec apply_all(atom(), module(), atom(), [term()]) ->
-    [term() | {badrpc, term()}].
+-spec apply_all(atom(), module(), atom(), [term()]) -> [term()].
 
 apply_all(Type, Module, Function, Args) ->
     Local = node(),
-    lists:map(fun (Node) when Node =:= Local ->
-            erlang:apply(Module, Function, Args);
-                  (Node) ->
-            case rpc:call(Node, Module, Function, Args) of
-                {badrpc, Reason} = Error ->
-                    lager:warning("ms_base ~p badrpc: ~p~n", [Type, Reason]),
-                    Error;
-                Response ->
-                    Response
-            end
-    end, resource_discovery:get_resources(Type)).
+    Nodes = resource_discovery:get_resources(Type),
+    apply_map(Nodes, Type, Module, Function, Args, Local).
+
+-spec apply_all_not_local(atom(), module(), atom(), [term()]) -> [term()].
+
+apply_all_not_local(Type, Module, Function, Args) ->
+    Local = node(),
+    Nodes = resource_discovery:get_resources(Type),
+    apply_map(Nodes -- [Local], Type, Module, Function, Args, Local).
+
+%% private
+apply_map([], _Type, _Module, _Function, _Args, _Local) ->
+    [];
+apply_map([Node | T], Type, Module, Function, Args, Local) when Node =:= Local ->
+    [erlang:apply(Module, Function, Args) | apply_map(T, Type, Module, Function, Args, Local)];
+apply_map([Node | T], Type, Module, Function, Args, Local) ->
+    case rpc:call(Node, Module, Function, Args) of
+        {badrpc, Reason} ->
+            lager:warning("ms_base ~p badrpc: ~p~n", [Type, Reason]),
+            apply_map(T, Type, Module, Function, Args, Local);
+        Response ->
+            [Response | apply_map(T, Type, Module, Function, Args, Local)]
+    end.

@@ -9,7 +9,7 @@
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#apply-4">apply/4</a></td><td></td></tr><tr><td valign="top"><a href="#apply_all-4">apply_all/4</a></td><td></td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#apply-4">apply/4</a></td><td></td></tr><tr><td valign="top"><a href="#apply_all-4">apply_all/4</a></td><td></td></tr><tr><td valign="top"><a href="#apply_all_not_local-4">apply_all_not_local/4</a></td><td></td></tr></table>
 
 
 <a name="functions"></a>
@@ -21,7 +21,7 @@
 ### apply/4 ###
 
 <pre><code>
-apply(Type::atom(), Module::module(), Function::atom(), Args::[term()]) -&gt; term() | {badrpc, term()}
+apply(Type::atom(), Module::module(), Function::atom(), Args::[term()]) -&gt; term() | {error, not_found} | {badrpc, term()}
 </code></pre>
 <br />
 
@@ -30,7 +30,16 @@ apply(Type::atom(), Module::module(), Function::atom(), Args::[term()]) -&gt; te
 ### apply_all/4 ###
 
 <pre><code>
-apply_all(Type::atom(), Module::module(), Function::atom(), Args::[term()]) -&gt; [term() | {badrpc, term()}]
+apply_all(Type::atom(), Module::module(), Function::atom(), Args::[term()]) -&gt; [term()]
+</code></pre>
+<br />
+
+<a name="apply_all_not_local-4"></a>
+
+### apply_all_not_local/4 ###
+
+<pre><code>
+apply_all_not_local(Type::atom(), Module::module(), Function::atom(), Args::[term()]) -&gt; [term()]
 </code></pre>
 <br />
 
