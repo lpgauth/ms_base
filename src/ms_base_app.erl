@@ -17,9 +17,6 @@
 -spec start() -> {ok, [atom()]}.
 
 start() ->
-    application:load(reconnaissance),
-    application:set_env(reconnaissance, callback_module, ms_base_reconnaissance),
-    application:set_env(reconnaissance, heartbeat_frequency, 0),
     application:ensure_all_started(?APP).
 
 -spec stop() -> ok | {error, {not_started, ?APP}}.
