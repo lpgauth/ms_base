@@ -1,0 +1,6 @@
+.eunit/
+.rebar/
+deps/
+doc/README.md
+ebin/
+log/
