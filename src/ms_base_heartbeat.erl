@@ -2,6 +2,7 @@
 -include("ms_base.hrl").
 
 -export([
+    heartbeat/0,
     start_link/0
 ]).
 
@@ -25,6 +26,13 @@
 -type state() :: #state {}.
 
 %% public
+-spec heartbeat() -> ok.
+
+heartbeat() ->
+    reconnaissance:discover(),
+    resource_discovery:trade_resources(),
+    ok.
+
 -spec start_link() -> {ok, pid()}.
 
 start_link() ->
@@ -77,9 +85,5 @@ code_change(_OldVsn, State, _Extra) ->
     {ok, State}.
 
 %% private
-heartbeat() ->
-    reconnaissance:discover(),
-    resource_discovery:trade_resources().
-
 heartbeat_timer(HeartbeatDelay) ->
     erlang:send_after(HeartbeatDelay, self(), ?HEARTBEAT_MSG).

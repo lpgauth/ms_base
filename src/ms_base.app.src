@@ -8,7 +8,8 @@
         lager,
         cowboy,
         reconnaissance,
-        resource_discovery
+        resource_discovery,
+        vmstats
     ]},
     {mod, {ms_base_app, []}},
     {env, []}
