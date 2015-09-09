@@ -17,9 +17,6 @@
 -spec start() -> {ok, [atom()]}.
 
 start() ->
-    application:load(statsderl),
-    BaseKey = [element(2, inet:gethostname()), <<".ms">>],
-    ok = application:set_env(statsderl, base_key, BaseKey),
     application:ensure_all_started(?APP).
 
 -spec stop() -> ok | {error, {not_started, ?APP}}.
