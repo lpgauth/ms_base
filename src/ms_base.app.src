@@ -1,6 +1,6 @@
 {application, ms_base, [
     {description, "ms base"},
-    {vsn, "0.1.0"},
+    {vsn, "0.1.1"},
     {registered, []},
     {applications, [
         kernel,
