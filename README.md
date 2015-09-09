@@ -10,6 +10,15 @@ Erlang microservice example (base)
 
 ## API
 
+### rpc
+
+```
+ms_base:apply(Type, Module, Function, Args).
+ms_base:apply_all(Type, Module, Function, Args)
+ms_base:apply_all_not_local(Type, Module, Function, Args)
+ms_base:apply_hash(Type, Term, Module, Function, Args)
+```
+
 ### status
 ```
 curl -i -X GET 'http://127.0.0.1:8080/status'
